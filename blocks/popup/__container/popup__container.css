@@ -7,3 +7,11 @@
   width: 470px;
   height: 370px;
 }
+@media screen and (max-width: 767px) {
+  .popup__container {
+    transform: translate(-50%, -50%);
+    width: 282px;
+    height: 358px;
+    flex-direction: column-reverse;
+  }
+}

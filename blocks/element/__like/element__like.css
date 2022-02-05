@@ -6,6 +6,7 @@
   margin: 0 30px 0 5px;
   object-fit: contain;
   transition: 0.3s ease-in-out;
+  cursor: pointer;
 }
 .element__like:hover{
   opacity: 0.5;

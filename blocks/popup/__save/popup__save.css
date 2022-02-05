@@ -9,4 +9,18 @@
   line-height: 50px;
   color: white;
   margin: 48px auto 37px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+.popup__save:hover {
+  opacity: 0.8;
+  transition: 0.3s ease-in-out;
+}
+@media screen and (max-width: 767px) {
+  .popup__save {
+    width: 238px;
+    height: 46px;
+    margin: 45px auto 0;
+  }
 }
