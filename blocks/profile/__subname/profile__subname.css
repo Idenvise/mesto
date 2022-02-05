@@ -1,0 +1,13 @@
+.profile__subname {
+  color: white;
+  font-size: 18px;
+  line-height: 22px;
+  margin: 16px 0 0 30px;
+  font-weight: 400;
+}
+@media screen and (max-width: 767px) {
+  .profile__subname {
+    font-size: 14px;
+    margin: 14px auto 0;
+  }
+}

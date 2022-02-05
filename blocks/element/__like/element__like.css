@@ -1,0 +1,16 @@
+.element__like {
+  background-image: url(../../../images/element__like.svg);
+  width: 22px;
+  height: 19px;
+  align-self: center;
+  margin: 0 30px 0 5px;
+  object-fit: contain;
+  transition: 0.3s ease-in-out;
+}
+.element__like:hover{
+  opacity: 0.5;
+  transition: 0.3s ease-in-out;
+}
+.element__like:active{
+  background-image: url(../../../images/element__like_active.svg);
+}

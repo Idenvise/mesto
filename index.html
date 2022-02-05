@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang='ru'>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesto</title>
+    <link rel="stylesheet" href='./pages/index.css'>
+  </head>
+  <body class='page'>
+    <header class='header'>
+      <img class='header__logo' src="./images/header__logo.svg" alt="Mesto">
+    </header>
+    <main class='content'>
+      <section class='profile' aria-label="Профиль">
+        <img class="profile__avatar" alt='Аватар' src="./images/Avatar.jpg">
+        <div class='profile__info'>
+          <div class='profile__name-and-button'>
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <div class='profile__button'></div>
+          </div>
+          <h2 class='profile__subname'>Исследователь океана</h2>
+        </div>
+        <div class='profile__add-button'></div>
+      </section>
+      <section class='elements' aria-label="Галерея">
+       <div class='element'>
+         <img class='element__img' src='./images/element__altay.jpg' alt='Алтай'>
+         <div class='element__image-info'>
+           <p class='element__title'>Алтай</p>
+           <div class='element__like'></div>
+         </div>
+       </div>
+       <div class='element'>
+        <img class='element__img' src='./images/element__dombay.png' alt='Домбай'>
+        <div class='element__image-info'>
+          <p class='element__title'>Домбай</p>
+          <div class='element__like'></div>
+        </div>
+      </div>
+      <div class='element'>
+        <img class='element__img' src='./images/element__elbrus.png' alt='Эльбрус'>
+        <div class='element__image-info'>
+          <p class='element__title'>Эльбрус</p>
+          <div class='element__like'></div>
+        </div>
+      </div>
+      <div class='element'>
+        <img class='element__img' src='./images/element__karachaevo.png' alt='Карачаево-Черкессия'>
+        <div class='element__image-info'>
+          <p class='element__title'>Карачаево-Черкессия</p>
+          <div class='element__like'></div>
+        </div>
+      </div>
+      <div class='element'>
+        <img class='element__img' src='./images/element__ongudayskoe.jpg' alt='Онгудайское'>
+        <div class='element__image-info'>
+          <p class='element__title'>Онгудайское</p>
+          <div class='element__like'></div>
+        </div>
+      </div>
+      <div class='element'>
+        <img class='element__img' src='./images/element__sevastopol.jpg' alt='Севастополь'>
+        <div class='element__image-info'>
+          <p class='element__title'>Севастополь</p>
+          <div class='element__like'></div>
+        </div>
+      </div>
+      </section>
+      <footer class='footer'>
+        <p class='footer__author'>&copy; 2022 Mesto Russia</p>
+      </footer>
+      <section class='popup popup_display_none' aria-label='Pop-up profile'>
+        <div class='popup__container'>
+          <form class='popup__form'>
+            <p class='popup__title'>Редактировать профиль</p>
+            <input class='popup__input' placeholder='Жак-Ив Кусто' type='text' required>
+            <input class='popup__input' placeholder='Исследователь океана' type='text' required>
+            <button class='popup__save' type='submit'>Сохранить</button>
+          </form>
+          <div class='popup__close'></div>
+        </div>
+      </section>
+    </main>
+    <script src='./scripts/index.js'></script>
+  </body>
+</html>
