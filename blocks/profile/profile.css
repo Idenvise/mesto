@@ -1,6 +1,5 @@
 .profile {
   display: flex;
-  min-height: 120px;
 }
 @media screen and (max-width: 767px) {
   .profile {

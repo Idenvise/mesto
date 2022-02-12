@@ -1,6 +1,5 @@
 .element__img {
-  max-width: 100%;
-
+  width: 100%;
   overflow: hidden;
   box-sizing: content-box;
   object-fit: contain;

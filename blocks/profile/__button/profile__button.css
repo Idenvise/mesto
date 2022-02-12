@@ -1,10 +1,12 @@
 .profile__button {
   width: 10px;
   height: 10px;
+  background-size: 10px 10px;
   background-image: url(../../../images/profile__button1.svg);
   border: 1px solid white;
-  padding: 6px;
-  margin: 37px 0 0 0;
+  padding: 11px;
+  margin: 36px 0 0 0;
+  background-color: transparent;
   background-position: center;
   background-repeat: no-repeat;
   transition: 0.3s ease-in-out;
@@ -17,13 +19,13 @@
 @media screen and (max-width: 950px){
   .profile__button {
     margin: 31px 0 0 0;
-    padding: 5px;
+    padding: 9px;
   }
 }
 @media screen and (max-width: 850px){
   .profile__button {
-    margin: 24px 0 0 0;
-    padding: 4.5px;
+    margin: 29px 0 0 0;
+    padding: 8px;
   }
 }
 @media screen and (max-width: 767px){
@@ -31,8 +33,7 @@
     width: 7.5px;
     height: 7.5px;
     margin: 6px 0 0 10px;
-    padding: 4.25px;
-
+    justify-content: start;
   }
 }
 
