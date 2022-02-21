@@ -1,0 +1,9 @@
+.popup-zoom__close {
+  background-image: url(../../../images/popup__close.svg);
+  width: 32px;
+  height: 32px;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}

@@ -1,0 +1,8 @@
+.popup-zoom__container {
+  display: flex;
+  margin: 0 auto;
+  align-self: center;
+  width: 500px;
+  height: 500px;
+  flex-direction: row-reverse;
+}
