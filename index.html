@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesto</title>
+    <link rel="stylesheet" href="./pages/index.css">
+  </head>
+  <body class="page">
+    <header class="header">
+      <img class="header__logo" src="./images/header__logo.svg" alt="Место">
+    </header>
+    <main class="content">
+      <section class="profile" aria-label="Профиль">
+        <img class="profile__avatar" alt="Аватар" src="./images/Avatar.jpg">
+        <div class="profile__info">
+          <div class="profile__name-and-button">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button class="profile__button" type="button"></button>
+          </div>
+          <p class="profile__subname">Исследователь океана</p>
+        </div>
+        <button class="profile__add-button" type="button"></button>
+      </section>
+      <section class="elements" aria-label="Галерея">
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__author">&copy; 2022 Mesto Russia</p>
+    </footer>
+    <section class="popup" aria-label="Pop-up profile">
+      <div class="popup__container">
+        <form class="popup__form" name="popup">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <input class="popup__input popup__input_content_name" placeholder="Имя" type="text" name="name" required>
+          <input class="popup__input popup__input_content_subname" placeholder="О себе" type="text" name="subname" required>
+          <button class="popup__save" type="submit">Сохранить</button>
+        </form>
+        <button class="popup__close" type="button"></button>
+      </div>
+    </section>
+    <section class="popup popup_add">
+      <div class="popup__container">
+        <form class="popup__form" name="popup_add">
+          <h2 class="popup__title">Новое место</h2>
+          <input class="popup__input popup__input_content_place" placeholder="Название" type="text" name="place" required>
+          <input class="popup__input popup__input_content_link" placeholder="Ссылка на картинку" type="text" name="link" required>
+          <button class="popup__save" type="submit">Создать</button>
+        </form>
+        <button class="popup__close" type="button"></button>
+      </div>
+    </section>
+    <section class="popup-zoom">
+      <div class="popup-zoom__container">
+        <div class="popup-zoom__img-place">
+         <img class="popup-zoom__img" src="" alt="">
+         <p class="popup-zoom__place"></p>
+      </div>
+      <button class="popup-zoom__close" type="button"></button>
+    </section>
+    <template id="template__element">
+      <article class="element">
+        <div class="element__trash"></div>
+        <img class="element__img" src="" alt="">
+        <div class="element__image-info">
+          <h2 class="element__title"></h2>
+          <button class="element__like" type="button"></button>
+        </div>
+      </article>
+    </template>
+    <script src="./scripts/index.js"></script>
+  </body>
+</html>
