@@ -34,16 +34,19 @@ const initialCards = [
 const sectionElements = document.querySelector('.elements'); //Карточки из коробки, лайк, удаление
 const templateElementContent = document.querySelector('#template__element').content;
 const templateElements = templateElementContent.querySelector('.element').cloneNode(true);
-let popupZoomImage = document.querySelector('.popup-zoom__img');
-let popupZoomPlace = document.querySelector('.popup-zoom__place')
-let popupZoom = document.querySelector('.popup-zoom')
+const popupZoomImage = document.querySelector('.popup-zoom__img');
+const popupZoomPlace = document.querySelector('.popup-zoom__place');
+const popupZoom = document.querySelector('.popup-zoom');
+const popupZoomClose = document.querySelector('.popup-zoom__close');
 function popupZoomVisible(){
   popupZoom.classList.add('popup_visible')
 }
 function popupZoomInvisible(){
   popupZoom.classList.remove('popup_visible')
 }
-
+popupZoomClose.addEventListener('click', function(){
+  popupZoomInvisible();
+})
 initialCards.forEach(function (i){
   const templateElements = templateElementContent.querySelector('.element').cloneNode(true);
   templateElements.querySelector('.element__img').src = i.link;
@@ -58,18 +61,20 @@ initialCards.forEach(function (i){
   })
   templateElements.querySelector('.element__img').addEventListener('click', function(evt){
     popupZoomImage.src = evt.target.src;
+    popupZoomPlace.textContent = i.name;
     popupZoomVisible();
   })
+
   sectionElements.prepend(templateElements);
 })
-let profileButton = document.querySelector('.profile__button');
-let popup = document.querySelector('.popup');
-let popupClose = document.querySelector('.popup__close');
-let popupInputName = document.querySelector('.popup__input_content_name');
-let popupInputSubname = document.querySelector('.popup__input_content_subname');
-let form = document.querySelector('.popup__form')
-let profileName = document.querySelector('.profile__name');
-let profileSubname = document.querySelector('.profile__subname');
+const profileButton = document.querySelector('.profile__button');
+const popup = document.querySelector('.popup');
+const popupClose = document.querySelector('.popup__close');
+const popupInputName = document.querySelector('.popup__input_content_name');
+const popupInputSubname = document.querySelector('.popup__input_content_subname');
+const form = document.querySelector('.popup__form')
+const profileName = document.querySelector('.profile__name');
+const profileSubname = document.querySelector('.profile__subname');
 
 function popupVisible () { //Видимость и невидимость попапа
   popup.classList.add('popup_visible');
@@ -94,12 +99,12 @@ function formSubmitHandler (evt) {//Обработка изменений в п�
 
 form.addEventListener('submit', formSubmitHandler);
 
-let popupAdd = document.querySelector('.popup_add');
-let popupAddClose = popupAdd.querySelector('.popup__close')
-let popupInputPlace = popupAdd.querySelector('.popup__input_content_place');
-let popupInputLink = popupAdd.querySelector('.popup__input_content_link');
-let profileAdd = document.querySelector('.profile__add-button');
-let formAdd = popupAdd.querySelector('.popup__form')
+const popupAdd = document.querySelector('.popup_add');
+const popupAddClose = popupAdd.querySelector('.popup__close')
+const popupInputPlace = popupAdd.querySelector('.popup__input_content_place');
+const popupInputLink = popupAdd.querySelector('.popup__input_content_link');
+const profileAdd = document.querySelector('.profile__add-button');
+const formAdd = popupAdd.querySelector('.popup__form')
 
 function popupAddVisible () {//Видимиость и невидимость попапа добавления картинок
   popupAdd.classList.add('popup_visible');
@@ -123,6 +128,11 @@ function popupAddSubmitHandler(evt) {//Добавление и удаление 
   })
   templateElements.querySelector('.element__trash').addEventListener('click', function(){
     templateElements.querySelector('.element__trash').closest('.element').remove();
+  })
+  templateElements.querySelector('.element__img').addEventListener('click', function(evt){
+    popupZoomImage.src = evt.target.src;
+    popupZoomPlace.textContent = templateElements.querySelector('.element__title').textContent;
+    popupZoomVisible();
   })
   sectionElements.prepend(templateElements);
   popupAddInvisible();
