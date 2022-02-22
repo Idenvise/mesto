@@ -7,3 +7,16 @@
   background-color: transparent;
   border: none;
 }
+.popup-zoom__close:hover {
+  opacity: 0.6;
+  transition: 0.3s ease-in-out;
+}
+@media screen and (max-width: 767px) {
+  .popup-zoom__close {
+    width: 20px;
+    height: 20px;
+    background-size: 20px 20px;
+    align-self: flex-end;
+  }
+}
+
