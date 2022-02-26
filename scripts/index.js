@@ -1,3 +1,10 @@
+const templateElementContent = document.querySelector('#template__element').content;
+const popupZoomImg = document.querySelector('.popup__zoom-img');
+const popupZoomPlace = document.querySelector('.popup__zoom-place');
+const popupZoom = document.querySelector('.popup-zoom');
+const elements = document.querySelector('.elements');
+const popupProfile = document.querySelector('.popup-profile');
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -39,7 +46,6 @@ function closePopup(popup) {
 }
 
 function createCard(card) {
-  const templateElementContent = document.querySelector('#template__element').content;
   const templateElement = templateElementContent.cloneNode(true);
   const elementImg = templateElement.querySelector('.element__img');
   elementImg.src = card.link;
@@ -55,17 +61,15 @@ function createCard(card) {
     evt.target.closest('.element').remove();
   })
   // Открытие
-  const popupZoomImg = document.querySelector('.popup__zoom-img');
   elementImg.addEventListener('click', function(evt){
     popupZoomImg.src = evt.target.src;
     popupZoomImg.alt = `На картинке ${card.name}`
-    document.querySelector('.popup__zoom-place').textContent = card.name;
-    openPopup(document.querySelector('.popup-zoom'));
+    popupZoomPlace.textContent = card.name;
+    openPopup(popupZoom);
   })
   return templateElement;
 }
 
-const popupProfile = document.querySelector('.popup-profile');
 function openProfileEditor() {
   const profileOpenButton = document.querySelector('.profile__button');
   profileOpenButton.addEventListener('click', function () {
@@ -110,7 +114,7 @@ function editProfile() {
 function spawnCards() {
   initialCards.forEach(function (card){
     createCard(card);
-    document.querySelector('.elements').prepend(createCard(card));
+    elements.prepend(createCard(card));
   });
 }
 function addCard() {
@@ -126,7 +130,7 @@ function addCard() {
     }
     popupInputPlace.value = '';
     popupInputLink.value = '';
-    document.querySelector('.elements').prepend(createCard(card));
+    elements.prepend(createCard(card));
     closePopup(popupAdd);
   });
 }
