@@ -141,13 +141,3 @@ openCardAdder();
 editProfile();
 spawnCards();
 addCard();
-
-
-
-
-
-
-
-
-
-
