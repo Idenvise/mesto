@@ -1,47 +1,55 @@
-const formProfile = document.forms.popup;
-const inputName = document.querySelector('.popup__input_content_name');
-const submitProfile = formProfile.querySelector('.popup__save')
 //Показать ошибку
-const showError = (formProfile, inputElement, errorMessage) => {
-  const errorElement = formProfile.querySelector(`.${inputElement.id}-error`);
+const showError = (form, inputElement, errorMessage) => {
+  const errorElement = form.querySelector(`.${inputElement.id}-error`);
   errorElement.textContent = errorMessage;
   errorElement.classList.add('show-error');
 }
 
 //Скрыть ошибку
-const hideError = (formProfile, inputElement) => {
-  const errorElement = formProfile.querySelector(`.${inputElement.id}-error`);
+const hideError = (form, inputElement) => {
+  const errorElement = form.querySelector(`.${inputElement.id}-error`);
   errorElement.classList.remove('show-error');
   errorElement.textContent = '';
-
 }
 
 //Проверка валидности инпутов
-const checkInputValidity = (formProfile, inputElement) => {
+const checkInputValidity = (form, inputElement) => {
   if (!inputElement.validity.valid) {
-    showError(formProfile, inputElement, inputElement.validationMessage);
+    showError(form, inputElement, inputElement.validationMessage);
+    inputElement.classList.add('popup__input_invalid')
   } else {
-    hideError(formProfile, inputElement);
+    hideError(form, inputElement);
+    inputElement.classList.remove('popup__input_invalid')
   }
 }
 
-//Добавление слушателей input в форму профиля
-function setEventListener(formProfile) {
-  let inputList = Array.from(formProfile.querySelectorAll('.popup__input'));
-  toggleButtonState(inputList);
+//Добавление слушателей input в формы
+function setEventListener(form, rest) {
+  const inputList = Array.from(form.querySelectorAll('.popup__input'));
+  const button = form.querySelector('.popup__save');
+  toggleButtonState(inputList, button);
   inputList.forEach(inputElement => {
     inputElement.addEventListener('input', function() {
-      checkInputValidity(formProfile, inputElement);
+      toggleButtonState(inputList, button);
+      checkInputValidity(form, inputElement);
     })
   })
 }
 
+//Включение валидации форм
+const enableValidation = (...rest) => {
+  const forms = Array.from(document.forms);
+  forms.forEach(form => {
+    setEventListener(form, rest);
+  })
+}
+
 //Состояние кнопки
-const toggleButtonState = (inputList) => {
-  if (invalidInputCheck(inputList)) {
-    submitProfile.setAttribute('disabled', 'disabled');
+const toggleButtonState = (inputList, button) => {
+  if (invalidInputCheck(inputList, button)) {
+    button.setAttribute('disabled', 'disabled');
   } else {
-    submitProfile.removeAttribute('disabled');
+    button.removeAttribute('disabled');
   }
 }
 
@@ -52,4 +60,6 @@ const invalidInputCheck = (inputList) => {
   })
 }
 
-setEventListener(formProfile);
+enableValidation({
+  popupInput: '.popup__input'
+});

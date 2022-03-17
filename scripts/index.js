@@ -4,6 +4,8 @@ const popupZoomPlace = document.querySelector('.popup__zoom-place');
 const popupZoom = document.querySelector('.popup-zoom');
 const elements = document.querySelector('.elements');
 const popupProfile = document.querySelector('.popup-profile');
+const popups = document.querySelectorAll('.popup');
+const popupList = Array.from(popups);
 
 const initialCards = [
   {
@@ -37,6 +39,28 @@ const initialCards = [
     alt: 'Байкал'
   }
 ];
+
+//Закрытие попапов кликом на оверлей
+function closeByClick() {
+  popupList.forEach(popup => {
+    popup.addEventListener('click', function(evt) {
+      if (evt.target.classList.contains('popup')) {
+        closePopup(popup);
+      }
+    })
+  })
+}
+
+//Закрытие попапов нажатием на escape
+function closeByEsc() {
+  popupList.forEach(popup => {
+    document.addEventListener('keydown', function(evt) {
+      if (evt.key == 'Escape') {
+        closePopup(popup);
+      }
+    })
+  })
+}
 
 function openPopup(popup) {
   popup.classList.add('popup_visible');
@@ -141,3 +165,5 @@ openCardAdder();
 editProfile();
 spawnCards();
 addCard();
+closeByClick();
+closeByEsc();

@@ -10,10 +10,6 @@
   box-sizing: border-box;
 }
 
-.popup__input:invalid {
-  border-bottom: 1px solid #FF0000;
-}
-
 .popup__input:first-of-type {
   margin-top: 41px;
 }

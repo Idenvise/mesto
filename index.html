@@ -33,9 +33,9 @@
         <form class="popup__form" name="popup" novalidate>
           <h2 class="popup__title">Редактировать профиль</h2>
           <input class="popup__input popup__input_content_name" id="name-input" value="Жак-Ив Кусто" placeholder="Имя" type="text" name="name" minlength="2" maxlength="40" required>
-          <span class="popup__input-error name-input-error">Блаблабла</span>
+          <span class="popup__input-error name-input-error"></span>
           <input class="popup__input popup__input_content_subname" id="subname-input" value="Исследователь океана" placeholder="О себе" type="text" name="subname" minlength="2" maxlength="200" required>
-          <span class="popup__input-error subname-input-error">Блаблабла</span>
+          <span class="popup__input-error subname-input-error"></span>
           <button class="popup__save" type="submit">Сохранить</button>
         </form>
         <button class="popup__close" type="button"></button>
@@ -43,10 +43,12 @@
     </section>
     <section class="popup popup-add">
       <div class="popup__container">
-        <form class="popup__form" name="popup_add">
+        <form class="popup__form" name="popup_add" novalidate>
           <h2 class="popup__title">Новое место</h2>
-          <input class="popup__input popup__input_content_place" placeholder="Название" type="text" name="place" required>
-          <input class="popup__input popup__input_content_link" placeholder="Ссылка на картинку" type="text" name="link" required>
+          <input class="popup__input popup__input_content_place" id="place-input" placeholder="Название" type="text" name="place" minlength="2" maxlength="30" required>
+          <span class="popup__input-error place-input-error"></span>
+          <input class="popup__input popup__input_content_link" id="url-input" placeholder="Ссылка на картинку" type="url" name="link" required>
+          <span class="popup__input-error url-input-error"></span>
           <button class="popup__save" type="submit">Создать</button>
         </form>
         <button class="popup__close" type="button"></button>
