@@ -1,32 +1,32 @@
 //Показать ошибку
-const showError = (form, inputElement, errorMessage) => {
+const showError = (form, inputElement, errorMessage, classes) => {
   const errorElement = form.querySelector(`.${inputElement.id}-error`);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add('show-error');
+  errorElement.classList.add(`${classes.showErrorClass}`);
 }
 
 //Скрыть ошибку
-const hideError = (form, inputElement) => {
+const hideError = (form, inputElement, classes) => {
   const errorElement = form.querySelector(`.${inputElement.id}-error`);
-  errorElement.classList.remove('show-error');
+  errorElement.classList.remove(`.${classes.showErrorClass}`);
   errorElement.textContent = '';
 }
 
 //Проверка валидности инпутов
-const checkInputValidity = (form, inputElement) => {
+const checkInputValidity = (form, inputElement, classes) => {
   if (!inputElement.validity.valid) {
-    showError(form, inputElement, inputElement.validationMessage);
-    inputElement.classList.add('popup__input_invalid')
+    showError(form, inputElement, inputElement.validationMessage, classes);
+    inputElement.classList.add(`${classes.invalidInputClass}`);
   } else {
-    hideError(form, inputElement);
-    inputElement.classList.remove('popup__input_invalid')
+    hideError(form, inputElement, classes);
+    inputElement.classList.remove(`${classes.invalidInputClass}`);
   }
 }
 
 //Добавление слушателей input в формы
-function setEventListener(form, rest) {
-  const inputList = Array.from(form.querySelectorAll('.popup__input'));
-  const button = form.querySelector('.popup__save');
+function setEventListener(form, classes) {
+  const inputList = Array.from(form.querySelectorAll(`${classes.popupInputSelector}`));
+  const button = form.querySelector(`${classes.submitSelector}`);
   toggleButtonState(inputList, button);
   inputList.forEach(inputElement => {
     inputElement.addEventListener('input', function() {
@@ -37,10 +37,10 @@ function setEventListener(form, rest) {
 }
 
 //Включение валидации форм
-const enableValidation = (...rest) => {
+const enableValidation = (classes) => {
   const forms = Array.from(document.forms);
   forms.forEach(form => {
-    setEventListener(form, rest);
+    setEventListener(form, classes);
   })
 }
 
@@ -53,7 +53,7 @@ const toggleButtonState = (inputList, button) => {
   }
 }
 
-//Проверка полей профиля
+//Проверка кнопок
 const invalidInputCheck = (inputList) => {
   return inputList.some(element => {
     return !element.validity.valid
@@ -61,5 +61,8 @@ const invalidInputCheck = (inputList) => {
 }
 
 enableValidation({
-  popupInput: '.popup__input'
+  popupInputSelector: '.popup__input',
+  submitSelector: '.popup__save',
+  showErrorClass: 'show-error',
+  invalidInputClass: 'popup__input_invalid'
 });
