@@ -43,7 +43,7 @@ const initialCards = [
 //Закрытие попапов кликом на оверлей
 function closeByClick() {
   popupList.forEach(popup => {
-    popup.addEventListener('click', function(evt) {
+    popup.addEventListener('mousedown', function(evt) {
       if (evt.target.classList.contains('popup')) {
         closePopup(popup);
       }
