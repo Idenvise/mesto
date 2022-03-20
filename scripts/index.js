@@ -152,8 +152,7 @@ function addCard() {
       link: popupInputLink.value,
       alt: `На картинке ${popupInputPlace.value}`
     }
-    popupInputPlace.value = '';
-    popupInputLink.value = '';
+    formAdd.reset();
     elements.prepend(createCard(card));
     closePopup(popupAdd);
     submitAdd.setAttribute('disabled', 'disabled');
