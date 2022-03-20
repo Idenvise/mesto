@@ -67,7 +67,8 @@ function closeByClick() {
 //Закрытие попапов нажатием на escape
 function closeByEsc(evt) {
       if (evt.key == 'Escape') {
-        popupList.forEach(popup => closePopup(popup));
+       const openedPopup = document.querySelector('.popup_visible');
+       closePopup(openedPopup);
   }
 }
 
