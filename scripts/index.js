@@ -1,4 +1,4 @@
-
+const thisTemplateImg = document.querySelector('.element__img');
 const popupZoomImg = document.querySelector('.popup__zoom-img');
 const popupZoomPlace = document.querySelector('.popup__zoom-place');
 const popupZoom = document.querySelector('.popup-zoom');
@@ -136,3 +136,4 @@ editProfile();
 spawnCards();
 addCard();
 closeByClick();
+

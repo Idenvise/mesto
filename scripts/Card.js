@@ -30,7 +30,8 @@ const initialCards = [
     alt: 'Байкал'
   }
 ];
-
+const templateImg = document.querySelector('#template__element').content.querySelector('.element__img');
+const elementsSection = document.querySelector('.elements');
 export class Card {
   constructor(obj) {
     this.name = obj.name;
@@ -42,16 +43,40 @@ export class Card {
   }
   _generateCard() {
     this._template = this._getTemplate();
+    const thisTemplateImg = this._template.querySelector('.element__img');
     this._template.querySelector('.element__title').textContent = this.name;
-    this._template.querySelector('.element__img').src = this.link;
-    this._template.querySelector('.element__img').alt = `На картинке изображен ${this.alt}`;
-    return this._template;
+    thisTemplateImg.src = this.link;
+    thisTemplateImg.alt = `На картинке изображен ${this.alt}`;
+
+    this._template._setEventListeners();
+    elementsSection.append(this._template);
+  }
+  _appendCard() {
+
+  }
+
+  _setEventListeners() {
+    //Слушатель клика по картинке
+
+    this._template.querySelector('.element__img').addEventListener('click', () => {
+      //this._handleOpenPopup();
+    })
+    this._template.querySelector('.element__trash').addEventListener('click', () => {
+      //this._handleOpenPopup();
+    })
+    this._template.querySelector('.element__like').addEventListener('click', () => {
+      //this._handleOpenPopup();
+    })
+  }
+  _handleOpenPopup() {
+    document.querySelector('.popup__zoom-img') = this.link;
+    document.querySelector('.zoom__zoom-place') = this.name;
+    document.querySelector('.popup-zoom').classList.add('popup_visible');
   }
 }
 
 initialCards.forEach(obj => {
   const card = new Card(obj);
-  const gen = card._generateCard();
-  console.log(gen);
+  const generatedCard = card._generateCard();
 })
 
