@@ -32,6 +32,9 @@ const initialCards = [
 ];
 const templateImg = document.querySelector('#template__element').content.querySelector('.element__img');
 const elementsSection = document.querySelector('.elements');
+const popupZoomImg = document.querySelector('.popup__zoom-img');
+const popupZoomPlace = document.querySelector('.popup__zoom-place');
+
 export class Card {
   constructor(obj) {
     this.name = obj.name;
@@ -43,35 +46,46 @@ export class Card {
   }
   _generateCard() {
     this._template = this._getTemplate();
+    console.log(this._template.querySelector('.element__trash'))
+    this._setEventListeners();
     const thisTemplateImg = this._template.querySelector('.element__img');
     this._template.querySelector('.element__title').textContent = this.name;
     thisTemplateImg.src = this.link;
     thisTemplateImg.alt = `На картинке изображен ${this.alt}`;
-
-    this._template._setEventListeners();
     elementsSection.append(this._template);
+
   }
   _appendCard() {
 
   }
 
   _setEventListeners() {
-    //Слушатель клика по картинке
-
     this._template.querySelector('.element__img').addEventListener('click', () => {
-      //this._handleOpenPopup();
+      this._handleOpenPopup();
     })
     this._template.querySelector('.element__trash').addEventListener('click', () => {
-      //this._handleOpenPopup();
+      this._handleRemoveCard();
     })
     this._template.querySelector('.element__like').addEventListener('click', () => {
-      //this._handleOpenPopup();
+      this._handleLike();
     })
   }
   _handleOpenPopup() {
-    document.querySelector('.popup__zoom-img') = this.link;
-    document.querySelector('.zoom__zoom-place') = this.name;
+    popupZoomImg.src = this.link;
+    popupZoomPlace.textContent = this.name;
     document.querySelector('.popup-zoom').classList.add('popup_visible');
+  }
+  _handleRemoveCard() {
+    const trash = this._template.querySelector('.element__trash');
+    trash.addEventListener('click', () => {
+      trash.closest('.element').remove();
+    })
+  }
+  _handleLike() {
+    const like = this._template.querySelector('.element__like');
+    like.addEventListener('click', () => {
+      like.classList.toggle('element__like_active');
+    })
   }
 }
 

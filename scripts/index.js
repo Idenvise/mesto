@@ -1,5 +1,5 @@
 const thisTemplateImg = document.querySelector('.element__img');
-const popupZoomImg = document.querySelector('.popup__zoom-img');
+
 const popupZoomPlace = document.querySelector('.popup__zoom-place');
 const popupZoom = document.querySelector('.popup-zoom');
 const elements = document.querySelector('.elements');
@@ -19,7 +19,6 @@ const popupInputPlace = popupAdd.querySelector('.popup__input_content_place');
 const popupInputLink = popupAdd.querySelector('.popup__input_content_link');
 const formAdd = popupAdd.querySelector('.popup__form')
 
-import {Card} from './Card.js'
 
 
 
@@ -64,16 +63,9 @@ function createCard(card) {
   // Удаление
   templateElement.querySelector('.element__trash').addEventListener('click', function(evt){
     evt.target.closest('.element').remove();
-  })
+  })}
   // Открытие
-  elementImg.addEventListener('click', function(evt){
-    popupZoomImg.src = evt.target.src;
-    popupZoomImg.alt = `На картинке ${card.name}`
-    popupZoomPlace.textContent = card.name;
-    openPopup(popupZoom);
-  })
-  return templateElement;
-}
+
 
 function openProfileEditor() {
   profileOpenButton.addEventListener('click', function () {
@@ -128,7 +120,6 @@ function addCard() {
     submitAdd.setAttribute('disabled', 'disabled');
   });
 }
-
 addPopupCLoseListener();
 openProfileEditor();
 openCardAdder();
@@ -137,3 +128,6 @@ spawnCards();
 addCard();
 closeByClick();
 
+
+import {Card} from './Card.js'
+import {FormValidation} from './FormValidation.js'
