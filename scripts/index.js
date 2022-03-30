@@ -9,11 +9,16 @@ const profileSubname = document.querySelector('.profile__subname');
 const popupInputName = document.querySelector('.popup__input_content_name');
 const popupInputSubname = document.querySelector('.popup__input_content_subname');
 const formAdd = document.querySelector('.popup-add .popup__form')
-export const popupZoom = document.querySelector('.popup-zoom');
+const popupZoom = document.querySelector('.popup-zoom');
+const popupZoomName = document.querySelector('.popup__zoom-place');
+const popupZoomImg = document.querySelector('.popup__zoom-img');
 const popupList = Array.from(popups);
 const template = document.querySelector('#template__element').content;
 const sectionElements = document.querySelector('.elements');
-const popupAddSubmit = document.querySelector('.popup-add .popup__save')
+const popupAddSubmit = document.querySelector('.popup-add .popup__save');
+const popupAddInputPlace = document.querySelector('.popup__input_content_place');
+const popupAddInputLink = document.querySelector('.popup__input_content_link')
+const formValidators = {}
 const data = {
   popupInputSelector: '.popup__input',
   submitSelector: '.popup__save',
@@ -66,7 +71,7 @@ function closeByEsc(evt) {
   }
 }
 
-export function openPopup(popup) {
+function openPopup(popup) {
   popup.classList.add('popup_visible');
   document.addEventListener('keydown', closeByEsc);
 }
@@ -77,6 +82,8 @@ function closePopup(popup) {
 
 function openProfileEditor() {
   profileOpenButton.addEventListener('click', function () {
+    popupInputName.value = profileName.textContent;
+    popupInputSubname.value = profileSubname.textContent;
     openPopup(popupProfile);
   });
 }
@@ -106,34 +113,53 @@ function editProfile() {
   });
 }
 
+function handleCardClick(name, link) {
+  popupZoomName.textContent = name;
+  popupZoomImg.src = link;
+  popupZoomName.alt = `На картинке изображено место под названием ${name}`;
+  openPopup(popupZoom);
+}
+
 import {Card} from './Card.js'
 import {FormValidation} from './FormValidation.js'
 
+function createCard(obj) {
+  const card = new Card(obj, template, handleCardClick);
+  return card.generateCard()
+}
+function insertCard(obj) {
+  sectionElements.prepend(createCard(obj));
+}
+
 initialCards.forEach(obj => {
-  const card = new Card(obj, template);
-  sectionElements.prepend(card.generateCard());
+  insertCard(obj);
 })
 
 formAdd.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const popupInputPlace = document.querySelector('.popup__input_content_place').value;
-  const popupInputLink = document.querySelector('.popup__input_content_link').value;
+  const popupInputPlace = popupAddInputPlace.value;
+  const popupInputLink = popupAddInputLink.value;
   const popupAddObj = {
     name: popupInputPlace,
     link: popupInputLink
   }
-  const userCard = new Card(popupAddObj, template);
-  sectionElements.prepend(userCard.generateCard());
-  popupAdd.classList.remove('popup_visible');
+  insertCard(popupAddObj);
+  closePopup(popupAdd);
   formAdd.reset();
-  popupAddSubmit.setAttribute('disabled', 'disabled')
+  formValidators['popup']._resetValidation(popupAddInputPlace, popupAddInputLink, popupAddSubmit);
 })
 
-formsArr.forEach(form => {
-  const start = new FormValidation(data, form);
-  start.enableValidation();
-})
+const enableValidation = (data) => {
+  formsArr.forEach(form => {
+    const validator = new FormValidation(data, form);
+    console.log(validator)
+    const formName = form.getAttribute('name');
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  })
+}
 
+enableValidation(data);
 addPopupCLoseListener();
 openProfileEditor();
 openCardAdder();

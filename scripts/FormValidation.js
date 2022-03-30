@@ -7,6 +7,10 @@ export class FormValidation {
     this._form = form;
   }
   enableValidation() {
+    this._setEventListeners();
+  }
+
+  _setEventListeners() {
     const inputList = Array.from(this._form.querySelectorAll(`${this._popupInputSelector}`));
     const button = this._form.querySelector(`${this._submitSelector}`);
     this._toggleButtonState(inputList, button);
@@ -46,5 +50,9 @@ export class FormValidation {
     const errorElement = this._form.querySelector(`.${inputElement.id}-error`);
     errorElement.classList.remove(`.${this._showErrorClass}`);
     errorElement.textContent = '';
+  }
+  _resetValidation(popupAddInputPlace, popupAddInputLink, popupAddSubmit) {
+    const inputList = Array.from([popupAddInputPlace, popupAddInputLink]);
+    this._toggleButtonState(inputList, popupAddSubmit);
   }
 }

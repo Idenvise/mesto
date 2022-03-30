@@ -1,23 +1,22 @@
-import { openPopup, popupZoom } from "./index.js";
-
 export class Card {
-  constructor(obj, template) {
+  constructor(obj, template, handleCardClick) {
     this.name = obj.name;
     this.link = obj.link;
     this._temp = template;
+    this._handleCardClick = handleCardClick;
   }
   generateCard() {
     this._template = this._temp.cloneNode(true);
-    const thisTemplateImg = this._template.querySelector('.element__img');
+    this._templateImg = this._template.querySelector('.element__img');
     this._template.querySelector('.element__title').textContent = this.name;
-    thisTemplateImg.src = this.link;
-    thisTemplateImg.alt = `На картинке изображен ${this.name}`;
-    this._setEventListeners(thisTemplateImg);
+    this._templateImg.src = this.link;
+    this._templateImg.alt = `На картинке изображено место под названием ${this.name}`;
+    this._setEventListeners();
     return this._template;
   }
-  _setEventListeners(thisTemplateImg) {
-    thisTemplateImg.addEventListener('click', () => {
-      this._handleOpenPopup();
+  _setEventListeners() {
+    this._templateImg.addEventListener('click', () => {
+      this._handleCardClick(this.name, this.link);
     })
     this._template.querySelector('.element__trash').addEventListener('click', (evt) => {
       this._handleRemoveCard(evt);
@@ -26,15 +25,9 @@ export class Card {
       this._handleLike(evt);
     })
   }
-  _handleOpenPopup() {
-    document.querySelector('.popup__zoom-img').src = this.link;
-    document.querySelector('.popup__zoom-place').textContent = this.name;
-    popupZoom.classList.add('popup_visible');
-    openPopup(popupZoom);
-  }
-  _handleRemoveCard(evt) {
-    evt.target.closest('.element').remove();
-  }
+   _handleRemoveCard(evt) {
+     evt.target.closest('.element').remove();
+   }
   _handleLike(evt) {
     evt.target.classList.toggle('element__like_active');
   }
