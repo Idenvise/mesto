@@ -6,10 +6,7 @@ export class Card {
     this.link = obj.link;
     this._temp = template;
   }
-  _getTemplate() {
-    return document.querySelector('#template__element').content.cloneNode(true);
-  }
-  _generateCard() {
+  generateCard() {
     this._template = this._temp.cloneNode(true);
     const thisTemplateImg = this._template.querySelector('.element__img');
     this._template.querySelector('.element__title').textContent = this.name;

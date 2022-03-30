@@ -13,6 +13,7 @@ export const popupZoom = document.querySelector('.popup-zoom');
 const popupList = Array.from(popups);
 const template = document.querySelector('#template__element').content;
 const sectionElements = document.querySelector('.elements');
+const popupAddSubmit = document.querySelector('.popup-add .popup__save')
 const data = {
   popupInputSelector: '.popup__input',
   submitSelector: '.popup__save',
@@ -110,7 +111,7 @@ import {FormValidation} from './FormValidation.js'
 
 initialCards.forEach(obj => {
   const card = new Card(obj, template);
-  sectionElements.prepend(card._generateCard());
+  sectionElements.prepend(card.generateCard());
 })
 
 formAdd.addEventListener('submit', (evt) => {
@@ -122,9 +123,10 @@ formAdd.addEventListener('submit', (evt) => {
     link: popupInputLink
   }
   const userCard = new Card(popupAddObj, template);
-  sectionElements.prepend(userCard._generateCard());
+  sectionElements.prepend(userCard.generateCard());
   popupAdd.classList.remove('popup_visible');
   formAdd.reset();
+  popupAddSubmit.setAttribute('disabled', 'disabled')
 })
 
 formsArr.forEach(form => {

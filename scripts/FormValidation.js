@@ -7,9 +7,6 @@ export class FormValidation {
     this._form = form;
   }
   enableValidation() {
-    this._setEventListener();
-  }
-  _setEventListener() {
     const inputList = Array.from(this._form.querySelectorAll(`${this._popupInputSelector}`));
     const button = this._form.querySelector(`${this._submitSelector}`);
     this._toggleButtonState(inputList, button);
