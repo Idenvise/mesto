@@ -53,6 +53,5 @@ export class FormValidation {
   }
   _resetValidation() {
     this._toggleButtonState();
-    console.log(this._button)
   }
 }
