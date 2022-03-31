@@ -146,13 +146,12 @@ formAdd.addEventListener('submit', (evt) => {
   insertCard(popupAddObj);
   closePopup(popupAdd);
   formAdd.reset();
-  formValidators['popup']._resetValidation(popupAddInputPlace, popupAddInputLink, popupAddSubmit);
+  formValidators['popup_add']._resetValidation();
 })
 
 const enableValidation = (data) => {
   formsArr.forEach(form => {
     const validator = new FormValidation(data, form);
-    console.log(validator)
     const formName = form.getAttribute('name');
     formValidators[formName] = validator;
     validator.enableValidation();

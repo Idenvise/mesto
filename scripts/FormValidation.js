@@ -11,25 +11,25 @@ export class FormValidation {
   }
 
   _setEventListeners() {
-    const inputList = Array.from(this._form.querySelectorAll(`${this._popupInputSelector}`));
-    const button = this._form.querySelector(`${this._submitSelector}`);
-    this._toggleButtonState(inputList, button);
-    inputList.forEach(inputElement => {
+    this._inputList = Array.from(this._form.querySelectorAll(`${this._popupInputSelector}`));
+    this._button = this._form.querySelector(`${this._submitSelector}`);
+    this._toggleButtonState();
+    this._inputList.forEach(inputElement => {
     inputElement.addEventListener('input', () => {
-      this._toggleButtonState(inputList, button);
+      this._toggleButtonState();
       this._checkInputValidity(inputElement);
     })
   })
   }
-    _toggleButtonState(inputList, button) {
-    if (this._invalidInputCheck(inputList, button)) {
-      button.setAttribute('disabled', 'disabled');
+    _toggleButtonState() {
+    if (this._invalidInputCheck()) {
+      this._button.setAttribute('disabled', 'disabled');
     } else {
-      button.removeAttribute('disabled');
+      this._button.removeAttribute('disabled');
     }
   }
-  _invalidInputCheck(inputList) {
-      return inputList.some(element => {
+  _invalidInputCheck() {
+      return this._inputList.some(element => {
       return !element.validity.valid;
     })}
   _checkInputValidity(inputElement) {
@@ -51,8 +51,8 @@ export class FormValidation {
     errorElement.classList.remove(`.${this._showErrorClass}`);
     errorElement.textContent = '';
   }
-  _resetValidation(popupAddInputPlace, popupAddInputLink, popupAddSubmit) {
-    const inputList = Array.from([popupAddInputPlace, popupAddInputLink]);
-    this._toggleButtonState(inputList, popupAddSubmit);
+  _resetValidation() {
+    this._toggleButtonState();
+    console.log(this._button)
   }
 }
