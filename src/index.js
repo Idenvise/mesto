@@ -1,14 +1,15 @@
-import {popupProfile, profileOpenButton, popupAdd, addButton, profileName, profileSubname,
-  popupZoom,template, sectionElements, formValidators, data,formsArr,
-  initialCards} from '../utils/constants.js'
-
-import Card from '../components/Card.js'
-import FormValidation from '../components/FormValidation.js'
-import Section from '../components/Section.js'
-import Popup from '../components/Popup.js';
-import PopupWithForm from '../components/PopupWithForm.js';
-import PopupWithImage from '../components/PopupWithImage.js';
-import UserInfo from '../components/UserInfo.js';
+import './images/header__logo.svg'
+import './images/Avatar.jpg'
+import './pages/index.css';
+import { popupProfile, profileOpenButton, popupAdd, addButton, profileName, profileSubname, popupZoom,
+  template, sectionElements, formValidators, data,formsArr, initialCards } from './utils/constants.js'
+import Card from './components/Card.js'
+import FormValidation from './components/FormValidation.js'
+import Section from './components/Section.js'
+import Popup from './components/Popup.js';
+import PopupWithForm from './components/PopupWithForm.js';
+import PopupWithImage from './components/PopupWithImage.js';
+import UserInfo from './components/UserInfo.js';
 
 function openProfileEditor() {
   profileOpenButton.addEventListener('click', function () {
