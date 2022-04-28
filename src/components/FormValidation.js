@@ -5,14 +5,14 @@ export default class FormValidation {
     this._showErrorClass = data.showErrorClass;
     this._invalidInputClass = data.invalidInputClass;
     this._form = form;
+    this._inputList = Array.from(this._form.querySelectorAll(`${this._popupInputSelector}`));
+    this._button = this._form.querySelector(`${this._submitSelector}`);
   }
   enableValidation() {
     this._setEventListeners();
   }
 
   _setEventListeners() {
-    this._inputList = Array.from(this._form.querySelectorAll(`${this._popupInputSelector}`));
-    this._button = this._form.querySelector(`${this._submitSelector}`);
     this._toggleButtonState();
     this._inputList.forEach(inputElement => {
     inputElement.addEventListener('input', () => {
@@ -51,7 +51,7 @@ export default class FormValidation {
     errorElement.classList.remove(`.${this._showErrorClass}`);
     errorElement.textContent = '';
   }
-  _resetValidation() {
+  resetValidation() {
     this._toggleButtonState();
   }
 }

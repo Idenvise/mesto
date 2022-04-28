@@ -5,10 +5,9 @@ export default class PopupWithImage extends Popup {
     super(popup);
   }
   open(name, link) {
-    super._handleEscClose();
     popupZoomImg.src = link;
+    popupZoomImg.alt = `На даннкой картинке изображено место под название ${name}`;
     popupZoomPlace.textContent = name;
-    popupZoomPlace.alt = `На даннкой картинке изображено место под название ${name}`;
-    this._popup.classList.add('popup_visible');
+    super.open();
   }
 }

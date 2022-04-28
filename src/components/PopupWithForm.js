@@ -13,16 +13,17 @@ export default class PopupWithForm extends Popup {
     })
     return this._inputValues;
   }
-  _setEventListeners() {
-    super._setEventListeners();
+  setEventListeners() {
+    super.setEventListeners();
     this._popupForm.addEventListener('submit', evt => {
       evt.preventDefault();
       this._submitHandler(this._getInputValues());
-      this._close();
+      this.close();
     })
   }
-  _close() {
+  close() {
     this._popup.classList.remove('popup_visible');
+    this._popupForm.reset();
     document.removeEventListener('keydown', this._closeByEsc);
   }
 }

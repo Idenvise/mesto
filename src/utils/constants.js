@@ -9,6 +9,8 @@ const popupZoomPlace = document.querySelector('.popup__zoom-place');
 const popupZoomImg = document.querySelector('.popup__zoom-img');
 const template = document.querySelector('#template__element').content;
 const sectionElements = document.querySelector('.elements');
+const inputName = document.querySelector('.popup__input_content_name');
+const inputSubname = document.querySelector('.popup__input_content_subname');
 const formValidators = {}
 const data = {
   popupInputSelector: '.popup__input',
@@ -47,4 +49,4 @@ const initialCards = [
 ];
 
 export {popupProfile, profileOpenButton, popupAdd, addButton, profileName, profileSubname, popupZoom, popupZoomPlace,
-  popupZoomImg, template, sectionElements, formValidators, data,formsArr, initialCards}
+  popupZoomImg, template, sectionElements, formValidators, data,formsArr, initialCards, inputSubname, inputName}
