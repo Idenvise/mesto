@@ -37,6 +37,7 @@ function createCard(item) {
 
 function addSubmitHandler( item ) {
   cardList.addItem(createCard(item));
+  this._popupForm.reset();
   formValidators['popup_add'].resetValidation();
 }
 
