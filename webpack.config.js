@@ -22,17 +22,12 @@ module.exports = {
       use: 'babel-loader',
       exclude: '/node_modules/'
     },
-    // добавили правило для обработки файлов
     {
-      // регулярное выражение, которое ищет все файлы с такими расширениями
       test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
       type: 'asset/resource'
     },
     {
-      // применять это правило только к CSS-файлам
       test: /\.css$/,
-      // при обработке этих файлов нужно использовать
-      // MiniCssExtractPlugin.loader и css-loader
       use: [MiniCssExtractPlugin.loader, {
         loader: 'css-loader',
         options: { importLoaders: 1 }
@@ -40,6 +35,9 @@ module.exports = {
       'postcss-loader']
     }
   ]
+  },
+  experiments: {
+    topLevelAwait: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

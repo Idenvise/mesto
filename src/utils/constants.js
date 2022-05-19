@@ -21,32 +21,7 @@ const data = {
 }
 
 const formsArr = Array.from(document.forms);
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-  }
-];
+
 
 export {popupProfile, profileOpenButton, popupAdd, addButton, profileName, profileSubname, popupZoom, popupZoomPlace,
-  popupZoomImg, template, sectionElements, formValidators, data,formsArr, initialCards, inputSubname, inputName}
+  popupZoomImg, template, sectionElements, formValidators, data, formsArr, inputSubname, inputName}
