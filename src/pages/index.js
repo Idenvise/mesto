@@ -3,14 +3,16 @@ import '../images/Avatar.jpg'
 import '../pages/index.css';
 import { popupProfile, profileOpenButton, popupAdd, addButton, profileName, profileSubname, popupZoom,
   template, sectionElements, formValidators, data,formsArr, inputName, inputSubname } from '../utils/constants.js'
+import '../components/Api.js'
 import Card from '../components/Card.js'
 import FormValidation from '../components/FormValidation.js'
 import Section from '../components/Section.js'
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 
-
+/*
 //Начальные карточки
 let initialCards = await fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
   method: 'GET',
@@ -56,6 +58,7 @@ fetch('https://mesto.nomoreparties.co/v1/cohort-40/users/me', {
 .then(res => {
   userInfo.setUserInfo(res);})
 }
+
 //Создание карточки
 function createNewCardRequest({name, link}) {
   fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
@@ -70,8 +73,13 @@ function createNewCardRequest({name, link}) {
     })
   }).then(res => res.json()).then(obj => createNewCard(obj))
   .catch(err => console.log(err))
-
 }
+*/
+const api = new Api(profileName, profileSubname);
+const initialCards = await api.getInitialCards();
+console.log(initialCards)
+api.getProfileData();
+
 function openProfileEditor() {
   profileOpenButton.addEventListener('click', function () {
   const user = userInfo.getUserInfo();
@@ -88,7 +96,7 @@ function openCardAdder() {
 }
 
 function editProfile({name, subname}) {
-  profileEditRequest(name, subname);
+  api.changeProfileData(name, subname, userInfo);
 }
 
 function createCard(item) {
@@ -98,10 +106,10 @@ function createCard(item) {
 }
 
 function addSubmitHandler( item ) {
-  createNewCardRequest(item);
+  api.createCard(item);
 }
 
-function createNewCard(item) {
+export function createNewCard(item) {
   cardList.addItem(createCard(item));
   popupAddCard.resetForm();
   formValidators['popup_add'].resetValidation();
@@ -113,6 +121,7 @@ const profile = new PopupWithForm(popupProfile, editProfile);
 profile.setEventListeners();
 const popupAddCard = new PopupWithForm(popupAdd, addSubmitHandler);
 popupAddCard.setEventListeners();
+
 
 const cardList = new Section({
   items: initialCards,
@@ -136,6 +145,7 @@ const enableValidation = (data) => {
 function handleCardClick(name, link) {
   popupWithImage.open(name, link);
 }
+
 
 enableValidation(data);
 openProfileEditor();
