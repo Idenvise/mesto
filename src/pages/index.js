@@ -2,7 +2,7 @@ import '../images/header__logo.svg'
 import '../images/Avatar.jpg'
 import '../pages/index.css';
 import { popupProfile, profileOpenButton, popupAdd, addButton, profileName, profileSubname, popupZoom,
-  template, sectionElements, formValidators, data,formsArr, inputName, inputSubname } from '../utils/constants.js'
+  template, sectionElements, formValidators, data,formsArr, inputName, inputSubname, counter } from '../utils/constants.js'
 import '../components/Api.js'
 import Card from '../components/Card.js'
 import FormValidation from '../components/FormValidation.js'
@@ -12,72 +12,8 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 
-/*
-//Начальные карточки
-let initialCards = await fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
-  method: 'GET',
-  headers: {
-    authorization: '25506122-31ea-41ea-9643-f48e75424308'
-  }
-}).then(res => res.json())
-.catch(err => console.log(err))
-
-//Получение данных профиля
-fetch('https://nomoreparties.co/v1/cohort-40/users/me',
-{method: 'GET',
-  headers: {
-  authorization: '25506122-31ea-41ea-9643-f48e75424308'
- }
-})
-.then(res => {if (res.ok){
-  return res.json();
-} else {
-  console.log('Всё идет не по плану(Профиль)')
-}}).then(res => {profileName.textContent = res.name;
-                 profileSubname.textContent = res.about});
-
-//Изменение данных профиля
-function profileEditRequest(name, subname) {
-fetch('https://mesto.nomoreparties.co/v1/cohort-40/users/me', {
- method: 'PATCH',
- headers: {
-   authorization: '25506122-31ea-41ea-9643-f48e75424308',
-   'Content-Type': 'application/json'
- },
- body: JSON.stringify({
-   name: name,
-   about: subname
- })
-}).then(res => {if (res.ok) {
-  return res.json()
-} else
-  {
-    return Promise.reject(res.status);
-}
-})
-.then(res => {
-  userInfo.setUserInfo(res);})
-}
-
-//Создание карточки
-function createNewCardRequest({name, link}) {
-  fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
-    method: 'POST',
-    headers: {
-      authorization: '25506122-31ea-41ea-9643-f48e75424308',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: name,
-      link: link
-    })
-  }).then(res => res.json()).then(obj => createNewCard(obj))
-  .catch(err => console.log(err))
-}
-*/
 const api = new Api(profileName, profileSubname);
 const initialCards = await api.getInitialCards();
-console.log(initialCards)
 api.getProfileData();
 
 function openProfileEditor() {
@@ -100,7 +36,7 @@ function editProfile({name, subname}) {
 }
 
 function createCard(item) {
-  const newCard = new Card(item, template, handleCardClick)
+  const newCard = new Card(item, template, handleCardClick, handleLikeApi, counter)
   const generatedCard = newCard.generateCard();
   return generatedCard;
 }
@@ -126,6 +62,7 @@ popupAddCard.setEventListeners();
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
+  counter.textContent = item.likes.length;
   cardList.addItem(createCard(item));
   }}, sectionElements);
 cardList.renderItems();
@@ -146,6 +83,10 @@ function handleCardClick(name, link) {
   popupWithImage.open(name, link);
 }
 
+function handleLikeApi(cardId, counter) {
+  console.log(counter)
+  api.setLike(cardId, counter);
+}
 
 enableValidation(data);
 openProfileEditor();

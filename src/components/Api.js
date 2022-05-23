@@ -33,27 +33,27 @@ export default class Api {
   //Изменение данных профиля
   changeProfileData(name, subname, userInfo) {
     return fetch('https://mesto.nomoreparties.co/v1/cohort-40/users/me', {
-      method: 'PATCH',
-      headers: {
-      authorization: '25506122-31ea-41ea-9643-f48e75424308',
-                     'Content-Type': 'application/json'
-       },
-      body: JSON.stringify({
-        name: name,
-        about: subname
-      })
-      }).then(res => {if (res.ok) {
-        return res.json()
-      } else
-        {
-          return Promise.reject(res.status);
-      }
-      })
-      .then(res => {
-        userInfo.setUserInfo(res);})
+    method: 'PATCH',
+    headers: {
+    authorization: '25506122-31ea-41ea-9643-f48e75424308',
+                   'Content-Type': 'application/json'
+     },
+    body: JSON.stringify({
+      name: name,
+      about: subname
+    })
+    }).then(res => {if (res.ok) {
+      return res.json()
+    } else
+      {
+        return Promise.reject(res.status);
     }
+    })
+    .then(res => {
+      userInfo.setUserInfo(res);})
+  }
   createCard({name, link}) {
-    fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
     method: 'POST',
     headers: {
     authorization: '25506122-31ea-41ea-9643-f48e75424308',
@@ -66,4 +66,24 @@ export default class Api {
   }).then(res => res.json()).then(obj => createNewCard(obj))
   .catch(err => console.log(err))
     }
+  //Постановка лайка
+  setLike(cardId, counter) {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}/likes`, {
+    method: 'PUT',
+    headers: {
+    authorization: '25506122-31ea-41ea-9643-f48e75424308',
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+    name: this.profileName.textContent,
+    about: this.profileSubname.textContent
+  })
+  }).then(res => {if (res.ok) {
+    return res.json();
+  }}
+  ).then(res => {
+    console.log(counter)
+    counter.textContent = res.likes.length;
+  })
+  }
 }
