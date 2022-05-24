@@ -2,8 +2,7 @@
   background-image: url(../../../images/element__like.svg);
   width: 22px;
   height: 19px;
-  align-self: center;
-  margin: 0 20px 3px 5px;
+  margin: 22px 0 3px;
   object-fit: contain;
   transition: 0.3s ease-in-out;
   cursor: pointer;

@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesto</title>
-    <link rel="stylesheet" href="./pages/index.css">
   </head>
   <body class="page">
     <header class="header">
-      <img class="header__logo" src="./images/header__logo.svg" alt="Место">
+      <img class="header__logo" src="<%=require('./images/header__logo.svg')%>" alt="Место">
     </header>
     <main class="content">
       <section class="profile" aria-label="Профиль">
-        <img class="profile__avatar" alt="Аватар" src="./images/Avatar.jpg">
+        <img class="profile__avatar" alt="Аватар" src="<%=require('./images/Avatar.jpg')%>">
         <div class="profile__info">
           <div class="profile__name-and-button">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -45,7 +44,7 @@
       <div class="popup__container">
         <form class="popup__form" name="popup_add" novalidate>
           <h2 class="popup__title">Новое место</h2>
-          <input class="popup__input popup__input_content_place" id="place-input" placeholder="Название" type="text" name="place" minlength="2" maxlength="30" required>
+          <input class="popup__input popup__input_content_place" id="place-input" placeholder="Название" type="text" name="name" minlength="2" maxlength="30" required>
           <span class="popup__input-error place-input-error"></span>
           <input class="popup__input popup__input_content_link" id="url-input" placeholder="Ссылка на картинку" type="url" name="link" required>
           <span class="popup__input-error url-input-error"></span>
@@ -69,10 +68,12 @@
         <img class="element__img" src="#" alt="">
         <div class="element__image-info">
           <h2 class="element__title"></h2>
-          <button class="element__like" type="button"></button>
+          <div class="element__card-info">
+            <button class="element__like" type="button"></button>
+            <h3 class="element__like-counter">0</h3>
+          </div>
         </div>
       </article>
     </template>
-    <script type="module" src="./scripts/index.js"></script>
   </body>
 </html>
