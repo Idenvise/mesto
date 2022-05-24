@@ -2,6 +2,7 @@ export default class Card {
   constructor(obj, template, handleCardClick, handleSetLikeApi, handleUnsetLikeApi) {
     this.name = obj.name;
     this.link = obj.link;
+    this._obj = obj;
     this.likes = obj.likes.length;
     this._temp = template;
     this._handleSetLikeApi = handleSetLikeApi;
@@ -12,11 +13,15 @@ export default class Card {
   generateCard() {
     this._element = this._temp.querySelector('.element').cloneNode(true);
     this._elementImg = this._element.querySelector('.element__img');
+    this._elementLike = this._element.querySelector('.element__like');
     this.likeCounter =  this._element.querySelector('.element__like-counter')
     this._element.querySelector('.element__title').textContent = this.name;
     this.likeCounter.textContent = this.likes;
     this._elementImg.src = this.link;
     this._elementImg.alt = `На картинке изображено место под названием ${this.name}`;
+    this._obj.likes.forEach(el => {if (el._id == '6064d880448dd416cbf5c9bc') {
+      this._elementLike.classList.add('element__like_active')
+    }})
     this.setEventListeners();
     return this._element;
   }
@@ -27,7 +32,7 @@ export default class Card {
     this._element.querySelector('.element__trash').addEventListener('click', (evt) => {
       this._handleRemoveCard(evt);
     })
-    this._element.querySelector('.element__like').addEventListener('click', (evt) => {
+    this._elementLike.addEventListener('click', (evt) => {
       this._handleLike(evt);
     })
   }
