@@ -82,8 +82,20 @@ export default class Api {
     return res.json();
   }}
   ).then(res => {
-    console.log(counter)
     counter.textContent = res.likes.length;
   })
+  .catch(err => console.log(err))
+  }
+  unsetLike(cardId, counter) {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}/likes`, {
+    method: 'DELETE',
+    headers: {
+    authorization: '25506122-31ea-41ea-9643-f48e75424308',
+    'Content-Type': 'application/json'
+    }
+  }).then(res => {if (res.ok) {
+    return res.json()
+  }}).then(res => counter.textContent = res.likes.length)
+    .catch(err => console.log(err))
   }
 }

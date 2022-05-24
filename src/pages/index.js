@@ -2,7 +2,7 @@ import '../images/header__logo.svg'
 import '../images/Avatar.jpg'
 import '../pages/index.css';
 import { popupProfile, profileOpenButton, popupAdd, addButton, profileName, profileSubname, popupZoom,
-  template, sectionElements, formValidators, data,formsArr, inputName, inputSubname, counter } from '../utils/constants.js'
+  template, sectionElements, formValidators, data,formsArr, inputName, inputSubname} from '../utils/constants.js'
 import '../components/Api.js'
 import Card from '../components/Card.js'
 import FormValidation from '../components/FormValidation.js'
@@ -36,7 +36,7 @@ function editProfile({name, subname}) {
 }
 
 function createCard(item) {
-  const newCard = new Card(item, template, handleCardClick, handleLikeApi, counter)
+  const newCard = new Card(item, template, handleCardClick, handleSetLikeApi, handleUnsetLikeApi)
   const generatedCard = newCard.generateCard();
   return generatedCard;
 }
@@ -62,7 +62,6 @@ popupAddCard.setEventListeners();
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
-  counter.textContent = item.likes.length;
   cardList.addItem(createCard(item));
   }}, sectionElements);
 cardList.renderItems();
@@ -83,9 +82,12 @@ function handleCardClick(name, link) {
   popupWithImage.open(name, link);
 }
 
-function handleLikeApi(cardId, counter) {
-  console.log(counter)
+function handleSetLikeApi(cardId, counter) {
   api.setLike(cardId, counter);
+}
+
+function handleUnsetLikeApi(cardId, counter) {
+  api.unsetLike(cardId, counter);
 }
 
 enableValidation(data);

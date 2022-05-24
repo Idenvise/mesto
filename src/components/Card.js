@@ -1,20 +1,22 @@
 export default class Card {
-  constructor(obj, template, handleCardClick, handleLikeApi, counter) {
+  constructor(obj, template, handleCardClick, handleSetLikeApi, handleUnsetLikeApi) {
     this.name = obj.name;
     this.link = obj.link;
+    this.likes = obj.likes.length;
     this._temp = template;
-    this._handleLikeApi = handleLikeApi;
+    this._handleSetLikeApi = handleSetLikeApi;
+    this._handleUnsetLikeApi = handleUnsetLikeApi;
     this._handleCardClick = handleCardClick;
     this._cardId= obj._id;
-    this.counter = counter;
   }
   generateCard() {
     this._element = this._temp.querySelector('.element').cloneNode(true);
     this._elementImg = this._element.querySelector('.element__img');
+    this.likeCounter =  this._element.querySelector('.element__like-counter')
     this._element.querySelector('.element__title').textContent = this.name;
+    this.likeCounter.textContent = this.likes;
     this._elementImg.src = this.link;
     this._elementImg.alt = `На картинке изображено место под названием ${this.name}`;
-    console.log(this._element)
     this.setEventListeners();
     return this._element;
   }
@@ -33,7 +35,11 @@ export default class Card {
      this._element.remove();
    }
   _handleLike(evt) {
-    this._handleLikeApi(this._cardId, this.counter);
+    if (evt.target.classList.contains('element__like_active')) {
+      this._handleUnsetLikeApi(this._cardId, this.likeCounter);
+    } else {
+      this._handleSetLikeApi(this._cardId, this.likeCounter);
+    }
     evt.target.classList.toggle('element__like_active');
   }
 }
