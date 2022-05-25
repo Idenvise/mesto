@@ -98,4 +98,16 @@ export default class Api {
   }}).then(res => counter.textContent = res.likes.length)
     .catch(err => console.log(err))
   }
+  deleteCard(cardId, card){
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}`, {
+    method: 'DELETE',
+    headers: {
+    authorization: '25506122-31ea-41ea-9643-f48e75424308',
+    'Content-Type': 'application/json'
+      }
+    }
+    ).then(res => {if (res.ok) {
+      card.remove()
+    }}).catch(err => console.log(err))
+  }
 }

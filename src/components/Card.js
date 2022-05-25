@@ -19,6 +19,9 @@ export default class Card {
     this._element.querySelector('.element__title').textContent = this.name;
     this.likeCounter.textContent = this.likes;
     this._elementImg.src = this.link;
+    if (this._obj.owner._id != '6064d880448dd416cbf5c9bc') {
+      this._element.querySelector('.element__trash').classList.add('element__trash_invisible')
+    }
     this._elementImg.alt = `На картинке изображено место под названием ${this.name}`;
     this._obj.likes.forEach(el => {if (el._id == '6064d880448dd416cbf5c9bc') {
       this._elementLike.classList.add('element__like_active')
@@ -31,7 +34,7 @@ export default class Card {
       this._handleCardClick(this.name, this.link);
     })
     this._element.querySelector('.element__trash').addEventListener('click', (evt) => {
-      this.openPopupDelete(evt);
+      this.openPopupDelete(this._cardId, this._element);
     })
     this._elementLike.addEventListener('click', (evt) => {
       this._handleLike(evt);

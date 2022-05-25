@@ -10,7 +10,7 @@ import Section from '../components/Section.js'
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo'
-import PopupDelete from '../components/PopupAccept'
+import PopupAccept from '../components/PopupAccept'
 const api = new Api(profileName, profileSubname);
 const initialCards = await api.getInitialCards();
 api.getProfileData();
@@ -57,15 +57,11 @@ profile.setEventListeners();
 const popupAddCard = new PopupWithForm(popupAdd, addSubmitHandler);
 popupAddCard.setEventListeners();
 
-const popupAccept = new PopupDelete(popupDelete, deleteCardHandler);
+const popupAccept = new PopupAccept(popupDelete, deleteCard);
 popupAccept.setEventListeners()
 
-function deleteCardHandler() {
-
-}
-
-function openPopupDelete(evt) {
-  popupAccept.open(evt)
+function openPopupDelete(cardId, card) {
+  popupAccept.open(cardId, card)
 }
 
 const cardList = new Section({
@@ -85,6 +81,10 @@ const enableValidation = (data) => {
     formValidators[formName] = validator;
     validator.enableValidation();
   })
+}
+
+function deleteCard(cardId, card) {
+  api.deleteCard(cardId, card)
 }
 
 function handleCardClick(name, link) {
