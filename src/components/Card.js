@@ -1,5 +1,6 @@
 export default class Card {
-  constructor(obj, template, handleCardClick, handleSetLikeApi, handleUnsetLikeApi) {
+  constructor(obj, template, handleCardClick, handleSetLikeApi, handleUnsetLikeApi, openPopupDelete) {
+    this.openPopupDelete = openPopupDelete;
     this.name = obj.name;
     this.link = obj.link;
     this._obj = obj;
@@ -30,7 +31,7 @@ export default class Card {
       this._handleCardClick(this.name, this.link);
     })
     this._element.querySelector('.element__trash').addEventListener('click', (evt) => {
-      this._handleRemoveCard(evt);
+      this.openPopupDelete(evt);
     })
     this._elementLike.addEventListener('click', (evt) => {
       this._handleLike(evt);

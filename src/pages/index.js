@@ -2,16 +2,15 @@ import '../images/header__logo.svg'
 import '../images/Avatar.jpg'
 import '../pages/index.css';
 import { popupProfile, profileOpenButton, popupAdd, addButton, profileName, profileSubname, popupZoom,
-  template, sectionElements, formValidators, data,formsArr, inputName, inputSubname} from '../utils/constants.js'
-import '../components/Api.js'
+  template, sectionElements, formValidators, data,formsArr, inputName, inputSubname, popupDelete} from '../utils/constants.js'
+import Api from '../components/Api.js'
 import Card from '../components/Card.js'
 import FormValidation from '../components/FormValidation.js'
 import Section from '../components/Section.js'
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-import UserInfo from '../components/UserInfo.js';
-import Api from '../components/Api.js';
-
+import UserInfo from '../components/UserInfo'
+import PopupDelete from '../components/PopupAccept'
 const api = new Api(profileName, profileSubname);
 const initialCards = await api.getInitialCards();
 api.getProfileData();
@@ -36,7 +35,7 @@ function editProfile({name, subname}) {
 }
 
 function createCard(item) {
-  const newCard = new Card(item, template, handleCardClick, handleSetLikeApi, handleUnsetLikeApi)
+  const newCard = new Card(item, template, handleCardClick, handleSetLikeApi, handleUnsetLikeApi, openPopupDelete)
   const generatedCard = newCard.generateCard();
   return generatedCard;
 }
@@ -58,6 +57,16 @@ profile.setEventListeners();
 const popupAddCard = new PopupWithForm(popupAdd, addSubmitHandler);
 popupAddCard.setEventListeners();
 
+const popupAccept = new PopupDelete(popupDelete, deleteCardHandler);
+popupAccept.setEventListeners()
+
+function deleteCardHandler() {
+
+}
+
+function openPopupDelete(evt) {
+  popupAccept.open(evt)
+}
 
 const cardList = new Section({
   items: initialCards,

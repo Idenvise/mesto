@@ -11,6 +11,7 @@ const template = document.querySelector('#template__element').content;
 const sectionElements = document.querySelector('.elements');
 const inputName = document.querySelector('.popup__input_content_name');
 const inputSubname = document.querySelector('.popup__input_content_subname');
+const popupDelete = document.querySelector('.popup-delete')
 const formValidators = {}
 const data = {
   popupInputSelector: '.popup__input',
@@ -22,4 +23,4 @@ const data = {
 const formsArr = Array.from(document.forms);
 
 export {popupProfile, profileOpenButton, popupAdd, addButton, profileName, profileSubname, popupZoom, popupZoomPlace,
-  popupZoomImg, template, sectionElements, formValidators, data, formsArr, inputSubname, inputName}
+  popupZoomImg, template, sectionElements, formValidators, data, formsArr, inputSubname, inputName, popupDelete}
