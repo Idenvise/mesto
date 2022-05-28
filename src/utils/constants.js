@@ -23,8 +23,7 @@ const data = {
   popupInputSelector: '.popup__input',
   submitSelector: '.popup__save',
   showErrorClass: 'show-error',
-  invalidInputClass: 'popup__input_invalid',
-
+  invalidInputClass: 'popup__input_invalid'
 }
 const formsArr = Array.from(document.forms);
 

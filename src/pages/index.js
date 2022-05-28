@@ -89,7 +89,6 @@ function changeAvatar({avatarUrl}) {
     popupAvatarButton.textContent = 'Сохранить'
   }
 }
-
 const popupAccept = new PopupAccept(popupDelete, deleteCard);
 popupAccept.setEventListeners()
 
