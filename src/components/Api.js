@@ -1,8 +1,9 @@
 import {createNewCard} from '../pages/index.js'
 export default class Api {
-  constructor(profileName, profileSubname){
+  constructor(profileName, profileSubname, avatar){
     this.profileName = profileName,
     this.profileSubname = profileSubname
+    this.avatar = avatar;
   }
   //Начальные карточки
   getInitialCards() {
@@ -28,7 +29,9 @@ export default class Api {
     } else {
       console.log('Всё идет не по плану(Профиль)')
     }}).then(res => {this.profileName.textContent = res.name;
-                     this.profileSubname.textContent = res.about});
+                     this.profileSubname.textContent = res.about
+                     this.avatar.src = res.avatar
+                     });
   }
   //Изменение данных профиля
   changeProfileData(name, subname, userInfo) {
@@ -109,5 +112,20 @@ export default class Api {
     ).then(res => {if (res.ok) {
       card.remove()
     }}).catch(err => console.log(err))
+  }
+  changeAvatar(avatarUrl){
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-40/users/me/avatar', {
+    method: 'PATCH',
+    headers: {
+      authorization: '25506122-31ea-41ea-9643-f48e75424308',
+      'Content-Type': 'application/json'
+        },
+    body: JSON.stringify({
+    avatar: avatarUrl
+  })
+  }).then(res => {if (res.ok) {
+    return res.json();
+  }}).then(res => this.avatar.src = res.avatar)
+  .catch(err => console.log(err))
   }
 }
