@@ -2,7 +2,8 @@ import '../images/header__logo.svg'
 import '../images/Avatar.jpg'
 import '../pages/index.css';
 import { popupProfile, profileOpenButton, popupAdd, addButton, profileName, profileSubname, popupZoom,
-  template, sectionElements, formValidators, data,formsArr, inputName, inputSubname, popupDelete, avatar, popupAvatar, avatarWrapper, popupAvatarButton, profileSave, popupAddSave} from '../utils/constants.js'
+  template, sectionElements, formValidators, data, formsArr, inputName, inputSubname, popupDelete, avatar,
+  popupAvatar, avatarWrapper, popupAvatarButton, profileSave, popupAddSave, popupDeleteButton} from '../utils/constants.js'
 import Api from '../components/Api.js'
 import Card from '../components/Card.js'
 import FormValidation from '../components/FormValidation.js'
@@ -13,8 +14,7 @@ import UserInfo from '../components/UserInfo'
 import PopupAccept from '../components/PopupAccept'
 
 const api = new Api(profileName, profileSubname, avatar);
-const initialCards = await api.getInitialCards();
-api.getProfileData();
+const initialInfo = await api.getInitialInfo();
 
 function openProfileEditor() {
   profileOpenButton.addEventListener('click', function() {
@@ -38,31 +38,30 @@ function openAvatarChanger() {
 }
 
 function editProfile({name, subname}) {
-  api.changeProfileData(name, subname, userInfo);
+  api.changeProfileData(name, subname, userInfo, editProfileButtonReset, popupProfileClose);
   profileSave.textContent = 'Сохранение...'
-  setTimeout(closeProfileEditor, 1000)
 }
-
-function closeProfileEditor() {
+function popupProfileClose() {
   profile.close()
+}
+function editProfileButtonReset() {
   profileSave.textContent = 'Сохранить'
 }
 
 function createCard(item) {
-  const newCard = new Card(item, template, handleCardClick, handleSetLikeApi, handleUnsetLikeApi, openPopupDelete)
+  const newCard = new Card(item, template, handleCardClick, handleSetLikeApi, handleUnsetLikeApi, openPopupDelete, initialInfo)
   const generatedCard = newCard.generateCard();
   return generatedCard;
 }
 
-function addSubmitHandler( item ) {
-  popupAddSave.textContent = 'Сотворение...'
-  api.createCard(item);
-
-  setTimeout(closePopupAdd, 2000)
+function addSubmitHandler(item) {
+  api.createCard(item, popupAddButtonReset, popupAddClose);
+  popupAddSave.textContent = 'Создание...'
 }
-
-function closePopupAdd() {
+function popupAddButtonReset() {
   popupAddSave.textContent = 'Создать'
+}
+function popupAddClose() {
   popupAddCard.close()
 }
 
@@ -72,8 +71,8 @@ export function createNewCard(item) {
   formValidators['popup_add'].resetValidation();
 }
 
-const userInfo = new UserInfo({ name: profileName, subname: profileSubname });
-
+const userInfo = new UserInfo({ name: profileName, subname: profileSubname, avatar, info:initialInfo });
+userInfo.setUserInfo({name: initialInfo[1].name, about: initialInfo[1].about, avatar: initialInfo[1].avatar});
 const profile = new PopupWithForm(popupProfile, editProfile);
 profile.setEventListeners();
 const popupAddCard = new PopupWithForm(popupAdd, addSubmitHandler);
@@ -82,12 +81,14 @@ const newAvatar = new PopupWithForm(popupAvatar, changeAvatar)
 newAvatar.setEventListeners();
 
 function changeAvatar({avatarUrl}) {
-  api.changeAvatar(avatarUrl)
+  api.changeAvatar(avatarUrl, saveReset, popupAvatarClose)
   popupAvatarButton.textContent = 'Сохранение...'
-  avatar.onload = function(){
-    newAvatar.close();
-    popupAvatarButton.textContent = 'Сохранить'
-  }
+}
+function saveReset() {
+  popupAvatarButton.textContent = 'Сохранить'
+}
+function popupAvatarClose() {
+newAvatar.close()
 }
 const popupAccept = new PopupAccept(popupDelete, deleteCard);
 popupAccept.setEventListeners()
@@ -97,7 +98,7 @@ function openPopupDelete(cardId, card) {
 }
 
 const cardList = new Section({
-  items: initialCards,
+  items: initialInfo[0],
   renderer: (item) => {
   cardList.addItem(createCard(item));
   }}, sectionElements);
@@ -116,19 +117,30 @@ const enableValidation = (data) => {
 }
 
 function deleteCard(cardId, card) {
-  api.deleteCard(cardId, card)
+  api.deleteCard(cardId, card, resetPopupDelete, deleteClose)
+  popupDeleteButton.textContent = 'Удаление...'
+}
+function resetPopupDelete() {
+  popupDeleteButton.textContent = 'Удалить'
+}
+function deleteClose() {
+  popupAccept.close()
 }
 
 function handleCardClick(name, link) {
   popupWithImage.open(name, link);
 }
 
-function handleSetLikeApi(cardId, counter) {
-  api.setLike(cardId, counter);
+function handleSetLikeApi(cardId, counter, handleLike, evt) {
+  api.setLike(cardId, counter, handleLike, evt, setAmount);
 }
 
-function handleUnsetLikeApi(cardId, counter) {
-  api.unsetLike(cardId, counter);
+function handleUnsetLikeApi(cardId, counter, handleLike, evt) {
+  api.unsetLike(cardId, counter, handleLike, evt, setAmount);
+}
+
+function setAmount(counter, amount) {
+  counter.textContent = amount;
 }
 
 enableValidation(data);

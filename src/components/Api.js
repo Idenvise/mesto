@@ -5,36 +5,29 @@ export default class Api {
     this.profileSubname = profileSubname
     this.avatar = avatar;
   }
-  //Начальные карточки
-  getInitialCards() {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
+  //Начальные карточки и данные профиля
+  getInitialInfo() {
+   const cards = fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
     method: 'GET',
     headers: {
       authorization: '25506122-31ea-41ea-9643-f48e75424308'
     }
-    }).then(res => {return res.json().then(arr => {return arr})})
+    }).then(res => {return this._checkResponse(res)}).then(res => {return res.json()})
     .catch(err => console.log(err));
 
-  }
-  //Получение данных профиля
-  getProfileData() {
-    return fetch('https://nomoreparties.co/v1/cohort-40/users/me',
+   const profileData = fetch('https://nomoreparties.co/v1/cohort-40/users/me',
     {method: 'GET',
       headers: {
       authorization: '25506122-31ea-41ea-9643-f48e75424308'
      }
-    })
-    .then(res => {if (res.ok){
-      return res.json();
-    } else {
-      console.log('Всё идет не по плану(Профиль)')
-    }}).then(res => {this.profileName.textContent = res.name;
-                     this.profileSubname.textContent = res.about
-                     this.avatar.src = res.avatar
-                     });
+    }).then(res => {return this._checkResponse(res)}).then(res => {return res.json()})
+    .catch(err => console.log(err));
+
+    return Promise.all([cards, profileData]).then(res => {return res});
+
   }
   //Изменение данных профиля
-  changeProfileData(name, subname, userInfo) {
+  changeProfileData(name, subname, userInfo, editProfileButtonReset, popupProfileClose) {
     return fetch('https://mesto.nomoreparties.co/v1/cohort-40/users/me', {
     method: 'PATCH',
     headers: {
@@ -45,17 +38,13 @@ export default class Api {
       name: name,
       about: subname
     })
-    }).then(res => {if (res.ok) {
-      return res.json()
-    } else
-      {
-        return Promise.reject(res.status);
-    }
-    })
-    .then(res => {
-      userInfo.setUserInfo(res);})
+    }).then(res => {return this._checkResponse(res).json()})
+    .then(res => {userInfo.setUserInfo(res);})
+    .then(popupProfileClose)
+    .catch(err => console.log(err))
+    .finally(editProfileButtonReset)
   }
-  createCard({name, link}) {
+  createCard({name, link}, popupAddButtonReset, popupAddClose) {
     return fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
     method: 'POST',
     headers: {
@@ -66,11 +55,14 @@ export default class Api {
     name: name,
     link: link
   })
-  }).then(res => res.json()).then(obj => createNewCard(obj))
+  }).then(res => {return this._checkResponse(res).json()})
+  .then(obj => createNewCard(obj))
+  .then(popupAddClose)
   .catch(err => console.log(err))
-    }
+  .finally(popupAddButtonReset)
+  }
   //Постановка лайка
-  setLike(cardId, counter) {
+  setLike(cardId, counter, handleLike, evt, setAmount) {
     return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}/likes`, {
     method: 'PUT',
     headers: {
@@ -81,27 +73,28 @@ export default class Api {
     name: this.profileName.textContent,
     about: this.profileSubname.textContent
   })
-  }).then(res => {if (res.ok) {
-    return res.json();
-  }}
+  }).then(res => {return this._checkResponse(res).json()}
   ).then(res => {
-    counter.textContent = res.likes.length;
+    setAmount(counter, res.likes.length);
+    handleLike(evt);
   })
-  .catch(err => console.log(err))
+   .catch(err => console.log(err))
   }
-  unsetLike(cardId, counter) {
+  unsetLike(cardId, counter, handleLike, evt, setAmount) {
     return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}/likes`, {
     method: 'DELETE',
     headers: {
     authorization: '25506122-31ea-41ea-9643-f48e75424308',
     'Content-Type': 'application/json'
     }
-  }).then(res => {if (res.ok) {
-    return res.json()
-  }}).then(res => counter.textContent = res.likes.length)
+  }).then(res => {return this._checkResponse(res).json()})
+    .then(res => {
+      setAmount(counter, res.likes.length);
+      handleLike(evt);
+    })
     .catch(err => console.log(err))
   }
-  deleteCard(cardId, card){
+  deleteCard(cardId, card, resetPopupDelete, deleteClose){
     return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}`, {
     method: 'DELETE',
     headers: {
@@ -109,11 +102,13 @@ export default class Api {
     'Content-Type': 'application/json'
       }
     }
-    ).then(res => {if (res.ok) {
-      card.remove()
-    }}).catch(err => console.log(err))
+    ).then(res => {return this._checkResponse(res).json()})
+     .then(() => card.remove())
+     .then(deleteClose)
+     .catch(err => console.log(err))
+     .finally(resetPopupDelete)
   }
-  changeAvatar(avatarUrl){
+  changeAvatar(avatarUrl, saveReset, popupAvatarClose){
     return fetch('https://mesto.nomoreparties.co/v1/cohort-40/users/me/avatar', {
     method: 'PATCH',
     headers: {
@@ -123,9 +118,15 @@ export default class Api {
     body: JSON.stringify({
     avatar: avatarUrl
   })
-  }).then(res => {if (res.ok) {
-    return res.json();
-  }}).then(res => this.avatar.src = res.avatar)
+  }).then(res => {return this._checkResponse(res).json()})
+  .then(res => this.avatar.src = res.avatar)
+  .then(popupAvatarClose)
   .catch(err => console.log(err))
+  .finally(saveReset);
+  }
+  _checkResponse(res) {
+    if (res.ok) {
+      return res
+    }
   }
 }

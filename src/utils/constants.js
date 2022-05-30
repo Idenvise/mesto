@@ -13,6 +13,7 @@ const sectionElements = document.querySelector('.elements');
 const inputName = document.querySelector('.popup__input_content_name');
 const inputSubname = document.querySelector('.popup__input_content_subname');
 const popupDelete = document.querySelector('.popup-delete');
+const popupDeleteButton = popupDelete.querySelector('.popup__delete');
 const avatar = document.querySelector('.profile__avatar');
 const popupAvatar = document.querySelector('.popup-avatar');
 const avatarWrapper = document.querySelector('.profile__avatar-wrapper');
@@ -28,4 +29,5 @@ const data = {
 const formsArr = Array.from(document.forms);
 
 export {popupProfile, profileOpenButton, popupAdd, addButton, profileName, profileSubname, popupZoom, popupZoomPlace,
-  popupZoomImg, template, sectionElements, formValidators, data, formsArr, inputSubname, inputName, popupDelete, avatar, popupAvatar, avatarWrapper, popupAvatarButton, profileSave, popupAddSave}
+  popupZoomImg, template, sectionElements, formValidators, data, formsArr, inputSubname, inputName, popupDelete,
+  avatar, popupAvatar, avatarWrapper, popupAvatarButton, profileSave, popupAddSave, popupDeleteButton}

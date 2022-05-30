@@ -8,7 +8,6 @@ export default class PopupAccept extends Popup {
     super.setEventListeners();
     this._popup.querySelector('.popup__delete').addEventListener('click', () => {
       this._openPopupDelete(this.cardId, this.card)
-      super.close();
     } )
   }
   open(cardId, card) {
