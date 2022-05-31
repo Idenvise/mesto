@@ -13,8 +13,8 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo'
 import PopupAccept from '../components/PopupAccept'
 
-const api = new Api(profileName, profileSubname, avatar);
-const initialInfo = await api.getInitialInfo();
+const api = new Api(profileName, profileSubname);
+const initialInfo = await Promise.all([api.getInitialCards(), api.getProfileInfo()]).catch(err => console.log(err))
 
 function openProfileEditor() {
   profileOpenButton.addEventListener('click', function() {
@@ -38,14 +38,12 @@ function openAvatarChanger() {
 }
 
 function editProfile({name, subname}) {
-  api.changeProfileData(name, subname, userInfo, editProfileButtonReset, popupProfileClose);
   profileSave.textContent = 'Сохранение...'
-}
-function popupProfileClose() {
-  profile.close()
-}
-function editProfileButtonReset() {
-  profileSave.textContent = 'Сохранить'
+  api.changeProfileData(name, subname)
+  .then(res => {userInfo.setUserInfo(res)})
+  .then(() => profile.close())
+  .catch(err => console.log(err))
+  .finally(() => profileSave.textContent = 'Сохранить')
 }
 
 function createCard(item) {
@@ -55,17 +53,15 @@ function createCard(item) {
 }
 
 function addSubmitHandler(item) {
-  api.createCard(item, popupAddButtonReset, popupAddClose);
+  api.createCard(item)
+  .then(obj => createNewCard(obj))
+  .then(() => popupAddCard.close())
+  .catch(err => console.log(err))
+  .finally(() => popupAddSave.textContent = 'Создать')
   popupAddSave.textContent = 'Создание...'
 }
-function popupAddButtonReset() {
-  popupAddSave.textContent = 'Создать'
-}
-function popupAddClose() {
-  popupAddCard.close()
-}
 
-export function createNewCard(item) {
+function createNewCard(item) {
   cardList.addItem(createCard(item));
   popupAddCard.resetForm();
   formValidators['popup_add'].resetValidation();
@@ -81,15 +77,14 @@ const newAvatar = new PopupWithForm(popupAvatar, changeAvatar)
 newAvatar.setEventListeners();
 
 function changeAvatar({avatarUrl}) {
-  api.changeAvatar(avatarUrl, saveReset, popupAvatarClose)
   popupAvatarButton.textContent = 'Сохранение...'
+  api.changeAvatar(avatarUrl)
+  .then(res => avatar.src = res.avatar)
+  .then(() => newAvatar.close())
+  .catch(err => console.log(err))
+  .finally(() => popupAvatarButton.textContent = 'Сохранить');
 }
-function saveReset() {
-  popupAvatarButton.textContent = 'Сохранить'
-}
-function popupAvatarClose() {
-newAvatar.close()
-}
+
 const popupAccept = new PopupAccept(popupDelete, deleteCard);
 popupAccept.setEventListeners()
 
@@ -117,14 +112,12 @@ const enableValidation = (data) => {
 }
 
 function deleteCard(cardId, card) {
-  api.deleteCard(cardId, card, resetPopupDelete, deleteClose)
+  api.deleteCard(cardId)
+  .then(() => card.remove())
+  .then(() => popupAccept.close())
+  .catch(err => console.log(err))
+  .finally(() => popupDeleteButton.textContent = 'Удалить')
   popupDeleteButton.textContent = 'Удаление...'
-}
-function resetPopupDelete() {
-  popupDeleteButton.textContent = 'Удалить'
-}
-function deleteClose() {
-  popupAccept.close()
 }
 
 function handleCardClick(name, link) {
@@ -132,15 +125,17 @@ function handleCardClick(name, link) {
 }
 
 function handleSetLikeApi(cardId, counter, handleLike, evt) {
-  api.setLike(cardId, counter, handleLike, evt, setAmount);
+  api.setLike(cardId, counter, handleLike, evt)
+  .then((res) => counter.textContent = res.likes.length)
+  .then(() => handleLike(evt))
+  .catch(err => console.log(err))
 }
 
 function handleUnsetLikeApi(cardId, counter, handleLike, evt) {
-  api.unsetLike(cardId, counter, handleLike, evt, setAmount);
-}
-
-function setAmount(counter, amount) {
-  counter.textContent = amount;
+  api.unsetLike(cardId)
+  .then(res => counter.textContent = res.likes.length)
+  .then(() => handleLike(evt))
+  .catch(err => console.log(err))
 }
 
 enableValidation(data);
