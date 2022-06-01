@@ -3,7 +3,10 @@ import '../images/Avatar.jpg'
 import '../pages/index.css';
 import { popupProfile, profileOpenButton, popupAdd, addButton, profileName, profileSubname, popupZoom,
   template, sectionElements, formValidators, data, formsArr, inputName, inputSubname, popupDelete, avatar,
-  popupAvatar, avatarWrapper, popupAvatarButton, profileSave, popupAddSave, popupDeleteButton} from '../utils/constants.js'
+  popupAvatar, avatarWrapper, popupAvatarButton, profileSave, popupAddSave, popupDeleteButton,
+  config,
+  popupZoomPlace,
+  popupZoomImg} from '../utils/constants.js'
 import Api from '../components/Api.js'
 import Card from '../components/Card.js'
 import FormValidation from '../components/FormValidation.js'
@@ -13,7 +16,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo'
 import PopupAccept from '../components/PopupAccept'
 
-const api = new Api(profileName, profileSubname);
+const api = new Api(profileName, profileSubname, config);
 const initialInfo = await Promise.all([api.getInitialCards(), api.getProfileInfo()]).catch(err => console.log(err))
 
 function openProfileEditor() {
@@ -99,7 +102,7 @@ const cardList = new Section({
   }}, sectionElements);
 cardList.renderItems();
 
-const popupWithImage = new PopupWithImage(popupZoom);
+const popupWithImage = new PopupWithImage(popupZoom, popupZoomPlace, popupZoomImg);
 popupWithImage.setEventListeners();
 
 const enableValidation = (data) => {

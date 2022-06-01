@@ -19,6 +19,13 @@ const popupAvatar = document.querySelector('.popup-avatar');
 const avatarWrapper = document.querySelector('.profile__avatar-wrapper');
 const popupAvatarButton = popupAvatar.querySelector('.popup__save');
 const popupAddSave = popupAdd.querySelector('.popup__save');
+const config = {
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-40',
+  headers: {
+    authorization: '25506122-31ea-41ea-9643-f48e75424308',
+    'Content-Type': 'application/json',
+  },
+}
 const formValidators = {}
 const data = {
   popupInputSelector: '.popup__input',
@@ -30,4 +37,4 @@ const formsArr = Array.from(document.forms);
 
 export {popupProfile, profileOpenButton, popupAdd, addButton, profileName, profileSubname, popupZoom, popupZoomPlace,
   popupZoomImg, template, sectionElements, formValidators, data, formsArr, inputSubname, inputName, popupDelete,
-  avatar, popupAvatar, avatarWrapper, popupAvatarButton, profileSave, popupAddSave, popupDeleteButton}
+  avatar, popupAvatar, avatarWrapper, popupAvatarButton, profileSave, popupAddSave, popupDeleteButton, config}

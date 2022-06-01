@@ -1,100 +1,80 @@
 export default class Api {
-  constructor(profileName, profileSubname){
+  constructor(profileName, profileSubname, config){
     this.profileName = profileName,
-    this.profileSubname = profileSubname
+    this.profileSubname = profileSubname,
+    this.config = config
   }
   //Начальные карточки и данные профиля
   getInitialCards() {
-   return fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
+   return fetch(`${this.config.baseUrl}/cards`, {
     method: 'GET',
-    headers: {
-      authorization: '25506122-31ea-41ea-9643-f48e75424308'
-    }
-    }).then(res => {return this._checkResponse(res).json()})
+    headers: this.config.headers
+    }).then(res => {return this._checkResponse(res)})
   }
   getProfileInfo(){
-   return fetch('https://nomoreparties.co/v1/cohort-40/users/me',
-    {method: 'GET',
-      headers: {
-      authorization: '25506122-31ea-41ea-9643-f48e75424308'
-     }
-    }).then(res => {return this._checkResponse(res).json()})
+   return fetch(`${this.config.baseUrl}/users/me`, {
+     method: 'GET',
+     headers: this.config.headers
+    }).then(res => {return this._checkResponse(res)})
   }
   //Изменение данных профиля
   changeProfileData(name, subname) {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-40/users/me', {
+    return fetch(`${this.config.baseUrl}/users/me`, {
     method: 'PATCH',
-    headers: {
-    authorization: '25506122-31ea-41ea-9643-f48e75424308',
-                   'Content-Type': 'application/json'
-     },
+    headers: this.config.headers,
     body: JSON.stringify({
       name: name,
       about: subname
     })
-    }).then(res => {return this._checkResponse(res).json()})
+    }).then(res => {return this._checkResponse(res)})
   }
   createCard({name, link}) {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
+    return fetch(`${this.config.baseUrl}/cards`, {
     method: 'POST',
-    headers: {
-    authorization: '25506122-31ea-41ea-9643-f48e75424308',
-    'Content-Type': 'application/json'
-    },
+    headers: this.config.headers,
     body: JSON.stringify({
     name: name,
     link: link
   })
-  }).then(res => {return this._checkResponse(res).json()})
+  }).then(res => {return this._checkResponse(res)})
   }
   //Постановка лайка
   setLike(cardId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}/likes`, {
+    return fetch(`${this.config.baseUrl}/cards/${cardId}/likes`, {
     method: 'PUT',
-    headers: {
-    authorization: '25506122-31ea-41ea-9643-f48e75424308',
-    'Content-Type': 'application/json'
-    },
+    headers: this.config.headers,
     body: JSON.stringify({
     name: this.profileName.textContent,
     about: this.profileSubname.textContent
   })
-  }).then(res => {return this._checkResponse(res).json()})
+  }).then(res => {return this._checkResponse(res)})
   }
   unsetLike(cardId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}/likes`, {
+    return fetch(`${this.config.baseUrl}/cards/${cardId}/likes`, {
     method: 'DELETE',
-    headers: {
-    authorization: '25506122-31ea-41ea-9643-f48e75424308',
-    'Content-Type': 'application/json'
-    }
-  }).then(res => {return this._checkResponse(res).json()})
+    headers: this.config.headers
+  }).then(res => {return this._checkResponse(res)})
   }
   deleteCard(cardId){
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}`, {
+    return fetch(`${this.config.baseUrl}/cards/${cardId}`, {
     method: 'DELETE',
-    headers: {
-    authorization: '25506122-31ea-41ea-9643-f48e75424308',
-    'Content-Type': 'application/json'
-      }
+    headers: this.config.headers
     }
-    ).then(res => {return this._checkResponse(res).json()})
+    ).then(res => {return this._checkResponse(res)})
   }
   changeAvatar(avatarUrl){
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-40/users/me/avatar', {
+    return fetch(`${this.config.baseUrl}/users/me/avatar`, {
     method: 'PATCH',
-    headers: {
-      authorization: '25506122-31ea-41ea-9643-f48e75424308',
-      'Content-Type': 'application/json'
-        },
+    headers: this.config.headers,
     body: JSON.stringify({
     avatar: avatarUrl
   })
-  }).then(res => {return this._checkResponse(res).json()})
+  }).then(res => {return this._checkResponse(res)})
   }
   _checkResponse(res) {
     if (res.ok) {
-      return res
+      return res.json()
     }
+    return Promise.reject(`Ошибка ${res.status}`);
   }
 }
