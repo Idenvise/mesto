@@ -11,7 +11,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 3;
+  z-index: 2;
   background-image: url(../../../images/profile_changeAvatar.svg);
   background-size: 26px 26px;
   background-position: center;
